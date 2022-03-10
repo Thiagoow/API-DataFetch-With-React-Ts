@@ -1,11 +1,20 @@
 import React from "react";
-import HelloWorld from "./components/HelloWorld";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+
+import Home from "./pages/Home";
 
 const App = () => {
+  const config = {
+    initialColorMode: "dark",
+    useSystemColorMode: false
+  };
+
+  const theme = extendTheme({ config });
+
   return (
-    <>
-      <HelloWorld />
-    </>
+    <ChakraProvider theme={theme}>
+      <Home />
+    </ChakraProvider>
   );
 };
 
