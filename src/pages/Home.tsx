@@ -5,25 +5,32 @@ import { Flex, Input, Image, Text, Button } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
 
 export default function Home() {
+  const [username, setUsername] = React.useState("Thiagoow");
   const [user, setUser] = React.useState({});
 
-  React.useEffect(() => {
-    async function getUser() {
+  const getUsername = (event: { target: { value: any } } | undefined) => {
+    const userTyped = event?.target.value;
+    setUsername(userTyped);
+
+    async function getGitHubData() {
       try {
-        const response = await api.get("/users/thiagoow");
+        const response = await api.get("/users/" + username);
         setUser(response.data);
       } catch (error) {
         console.log(error);
       }
     }
-
-    //Executa a função acima:
-    getUser();
-  }, []);
+    getGitHubData();
+  };
 
   return (
     <Flex direction="column" alignItems="center" paddingTop="2rem">
-      <Input width="14rem" size="sm" placeholder="Digite seu nome de usuário" />
+      <Input
+        onChange={getUsername}
+        width="14rem"
+        size="sm"
+        placeholder="Digite seu nome de usuário"
+      />
 
       <Flex direction="row" alignItems="center">
         <Image
