@@ -1,7 +1,7 @@
 import React from "react";
 
 import api from "../services/api";
-import { Flex, Input, Grid, Image, Text, Button } from "@chakra-ui/react";
+import { Flex, Input, Image, Text, Button } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
 
 export default function Home() {
