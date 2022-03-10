@@ -36,7 +36,7 @@ export default function Home() {
         />
 
         <Flex direction="column" marginLeft="1rem" alignItems="center">
-          <Text fontWeight="bold" fontSize="1.5rem" marginTop="0.8rem">
+          <Text fontWeight="bold" fontSize="1.5rem" marginTop="1rem">
             <a href={(user as any).url} target="_blank">
               {(user as any)?.name}
             </a>
@@ -50,7 +50,7 @@ export default function Home() {
             alignSelf="start"
             marginTop="0.6rem"
             marginLeft="0.2rem"
-            color="#ccc"
+            fontWeight="normal"
           >
             <a href={(user as any).html_url} target="_blank">
               {(user as any)?.login}
