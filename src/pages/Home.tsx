@@ -10,7 +10,7 @@ export default function Home() {
   React.useEffect(() => {
     async function getGithubData() {
       try {
-        const response = await api.get("/users/thiagoow");
+        const response = await api.get("/users/Thiagoow");
         setUser(response.data);
       } catch (error) {
         console.log(error);
@@ -33,11 +33,25 @@ export default function Home() {
           borderRadius="full"
         />
 
-        <Flex direction="column" marginLeft="1rem" alignItems="center">
-          <Text fontWeight="bold" fontSize="1.5rem" marginTop="1rem">
+        <Flex direction="column" marginLeft="1.4rem" alignItems="center">
+          <Text fontWeight="bold" fontSize="1.5rem" marginTop="1.1rem">
             <a href={(user as any).url} target="_blank">
               {(user as any)?.name}
             </a>
+          </Text>
+
+          <Text
+            fontSize="0.8rem"
+            alignSelf="start"
+            fontWeight="normal"
+            marginTop="0.4rem"
+            marginLeft="0.2rem"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            width="200px"
+            whiteSpace="nowrap"
+          >
+            {(user as any)?.bio}
           </Text>
 
           <Button
@@ -46,9 +60,9 @@ export default function Home() {
             leftIcon={<FaGithub />}
             fontSize="0.8rem"
             alignSelf="start"
-            marginTop="0.6rem"
+            marginTop="0.5rem"
             marginLeft="0.2rem"
-            fontWeight="normal"
+            fontWeight="semibold"
           >
             <a href={(user as any).html_url} target="_blank">
               {(user as any)?.login}
