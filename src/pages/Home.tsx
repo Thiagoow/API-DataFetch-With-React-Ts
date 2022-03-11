@@ -46,6 +46,7 @@ export default function Home() {
             fontWeight="normal"
             marginTop="0.4rem"
             marginLeft="0.2rem"
+            //Clip txt:
             overflow="hidden"
             textOverflow="ellipsis"
             width="200px"
