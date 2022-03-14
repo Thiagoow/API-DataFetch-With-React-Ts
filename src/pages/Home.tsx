@@ -1,31 +1,32 @@
-import React from "react";
-
-import api from "../services/api";
-import { Flex, Input, Image, Text, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Input,
+  Image,
+  Text,
+  Button,
+  Link,
+  Badge
+} from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
+//Hooks com React Query:
+import { GetGithubRepos } from "../services/repos";
+import { getGithubData } from "../services/users";
+
+const username = "Thiagoow";
 
 export default function Home() {
-  const [user, setUser] = React.useState({});
+  //Usando o hook de GET dos dados pro username com @xyz:
+  const { data: user } = getGithubData(username);
 
-  React.useEffect(() => {
-    async function getGithubData() {
-      try {
-        const response = await api.get("/users/Thiagoow");
-        setUser(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getGithubData();
-  });
+  //Usando o hook de GET dos repos:
+  const { data: repos } = GetGithubRepos(username);
 
   return (
     <Flex direction="column" alignItems="center" paddingTop="2rem">
       <Input width="14rem" size="sm" placeholder="Digite seu nome de usuário" />
-
       <Flex direction="row" alignItems="center">
         <Image
-          src={(user as any)?.avatar_url}
+          src={user?.avatar_url}
           alt="avatar"
           width="6rem"
           height="6rem"
@@ -35,8 +36,8 @@ export default function Home() {
 
         <Flex direction="column" marginLeft="1.4rem" alignItems="center">
           <Text fontWeight="bold" fontSize="1.5rem" marginTop="1.1rem">
-            <a href={(user as any).url} target="_blank">
-              {(user as any)?.name}
+            <a href={user?.url} target="_blank">
+              {user?.name}
             </a>
           </Text>
 
@@ -52,7 +53,7 @@ export default function Home() {
             width="200px"
             whiteSpace="nowrap"
           >
-            {(user as any)?.bio}
+            {user?.bio}
           </Text>
 
           <Button
@@ -65,11 +66,41 @@ export default function Home() {
             marginLeft="0.2rem"
             fontWeight="semibold"
           >
-            <a href={(user as any).html_url} target="_blank">
-              {(user as any)?.login}
+            <a href={user?.html_url} target="_blank">
+              {user?.login}
             </a>
           </Button>
         </Flex>
+      </Flex>
+
+      <Flex direction="column" marginBottom="3rem">
+        <Text fontWeight="bold" fontSize="1rem" marginTop="3rem" text->
+          <a href={repos?.url} target="_blank">
+            Repositórios
+          </a>
+        </Text>
+
+        {/*  @ts-ignore: Map is a method, not a property from type Repos */}
+        {repos?.map((repo: any) => (
+          <Link
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            width="25rem"
+            height="3rem"
+            background="#000"
+            _focus={{ boxShadow: "none" }}
+            _hover={{ textDecoration: "none" }}
+            marginTop="1.5rem"
+            paddingLeft="1rem"
+            paddingRight="1rem"
+            href={repo.html_url}
+            target="_blank"
+          >
+            <Text>{repo.name}</Text>
+            <Badge>{repo.language}</Badge>
+          </Link>
+        ))}
       </Flex>
     </Flex>
   );
