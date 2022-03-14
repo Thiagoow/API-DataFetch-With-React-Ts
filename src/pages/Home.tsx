@@ -8,22 +8,35 @@ import {
   Badge
 } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
+import React from "react";
 //Hooks com React Query:
 import { GetGithubRepos } from "../services/repos";
 import { getGithubData } from "../services/users";
 
-const username = "Thiagoow";
-
 export default function Home() {
+  //Username que tem o estado inicial como meu username:
+  const [username, setUsername] = React.useState("Thiagoow");
+
+  //Arrow function que define a var username oq foi digitado no input:
+  const getUsername = (event: { target: { value: any } } | undefined) => {
+    const userTyped = event?.target.value;
+    setUsername(userTyped);
+  };
+
   //Usando o hook de GET dos dados pro username com @xyz:
   const { data: user } = getGithubData(username);
-
   //Usando o hook de GET dos repos:
   const { data: repos } = GetGithubRepos(username);
 
   return (
     <Flex direction="column" alignItems="center" paddingTop="2rem">
-      <Input width="14rem" size="sm" placeholder="Digite seu nome de usuário" />
+      <Input
+        //Chama a função sempre que houver alteração no conteúdo do input:
+        onChange={getUsername}
+        width="14rem"
+        size="sm"
+        placeholder="Digite seu nome de usuário"
+      />
       <Flex direction="row" alignItems="center">
         <Image
           src={user?.avatar_url}
@@ -97,7 +110,15 @@ export default function Home() {
             href={repo.html_url}
             target="_blank"
           >
-            <Text>{repo.name}</Text>
+            <Text
+              //Clip txt:
+              overflow="hidden"
+              textOverflow="ellipsis"
+              width="17rem"
+              whiteSpace="nowrap"
+            >
+              {repo.name}
+            </Text>
             <Badge>{repo.language}</Badge>
           </Link>
         ))}
